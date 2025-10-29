@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>盐焗鲨和农妇</title>
   <style>
-
-
-    
     body {
-      
       font-family: "Microsoft YaHei", sans-serif;
       margin: 0;
       height: 100vh;
@@ -20,6 +16,51 @@
       justify-content: center;
       color: #f2f2f2;
       text-align: center;
+    }
+
+    /* 左上角菜单按钮 */
+    .menu-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    /* 侧边栏样式 */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
 
     h1 {
@@ -33,7 +74,7 @@
       margin-bottom: 2em;
     }
 
-    a {
+    a.main-link {
       display: inline-block;
       margin: 0 20px;
       font-size: 1.5em;
@@ -42,22 +83,40 @@
       transition: transform 0.3s, color 0.3s;
     }
 
-    a:hover {
+    a.main-link:hover {
       transform: translateY(-5px);
-     background: url('images/570f963f49ff50cc5b1e9d3ff419df31.jpg') no-repeat center center / cover
       color: #BF3838;
     }
   </style>
 </head>
 
 <body>
-  <h1>我们是盐焗鲨和农妇</h1>
-  <p>这是我们的双人网站</p>
+  <!-- 菜单按钮 -->
+  <button class="menu-btn" id="menuBtn">☰</button>
 
-  <div>
+  <!-- 侧边栏 -->
+  <div class="sidebar" id="sidebar">
     <a href="works.html">works</a>
     <a href="photos.html">photos</a>
     <a href="us.html">us</a>
   </div>
+
+  <!-- 页面主体 -->
+  <h1>我们是盐焗鲨和农妇</h1>
+  <p>这是我们的双人网站</p>
+  <div>
+    <a href="works.html" class="main-link">works</a>
+    <a href="photos.html" class="main-link">photos</a>
+    <a href="us.html" class="main-link">us</a>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
