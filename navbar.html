@@ -1,0 +1,56 @@
+<!-- navbar.html -->
+<div id="menu-button" onclick="toggleMenu()">☰</div>
+
+<div id="sidebar">
+  <a href="index.html">Home</a>
+  <a href="work.html">Work</a>
+  <a href="photos.html">Photos</a>
+  <a href="us.html">Us</a>
+</div>
+
+<style>
+  /* 菜单按钮 */
+  #menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1001;
+    color: #333;
+  }
+
+  /* 侧边栏 */
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: -220px; /* 初始隐藏 */
+    width: 200px;
+    height: 100%;
+    background-color: #f7f7f7;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+    padding-top: 60px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  /* 链接样式 */
+  #sidebar a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+  }
+
+  #sidebar a:hover {
+    background-color: #ddd;
+  }
+</style>
+
+<script>
+  function toggleMenu() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.style.left = (sidebar.style.left === '0px') ? '-220px' : '0px';
+  }
+</script>
