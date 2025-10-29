@@ -115,18 +115,13 @@
   <section class="page2">10/17</section>
 
   <script>
-    const menuButton = document.getElementById('menuButton');
+   
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
-    let sidebarOpen = false;
 
-    menuButton.addEventListener('click', () => {
-      if (!sidebarOpen) {
-        sidebar.style.left = '0';
-        sidebarOpen = true;
-      } else {
-        sidebar.style.left = '-250px';
-        sidebarOpen = false;
-      }
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
     });
   </script>
 
