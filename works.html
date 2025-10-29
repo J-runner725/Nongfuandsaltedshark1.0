@@ -26,9 +26,9 @@
     .page1 { background: url('images/liedown.jpg') no-repeat center center / cover; }
     .page2 { background: url('images/wineandwindow.jpg') no-repeat center center / cover; }
 
-       /* 左上角菜单按钮 */
+    /* 左上角菜单按钮 */
     .menu-btn {
-      position: absolute;
+      position: fixed;
       top: 20px;
       left: 20px;
       font-size: 24px;
@@ -71,30 +71,6 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.5em;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
-
-    p {
-      color: #ddd;
-      margin-bottom: 2em;
-    }
-
-    a.main-link {
-      display: inline-block;
-      margin: 0 20px;
-      font-size: 1.5em;
-      color: #fff;
-      text-decoration: none;
-      transition: transform 0.3s, color 0.3s;
-    }
-
-    a.main-link:hover {
-      transform: translateY(-5px);
-      color: #BF3838;
-    }
   </style>
 </head>
 
@@ -104,18 +80,17 @@
 
   <!-- 侧边栏 -->
   <div class="sidebar" id="sidebar">
+    <a href="index.html">home</a>
     <a href="works.html">works</a>
     <a href="photos.html">photos</a>
     <a href="us.html">us</a>
   </div>
 
+  <!-- 页面内容 -->
+  <section class="page1">9 / 16</section>
+  <section class="page2">10 / 17</section>
 
-    
-  <section class="page1">9/16/</section>
-  <section class="page2">10/17</section>
-
-  <script>
-   
+  <!-- 侧边栏脚本 -->
   <script>
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
@@ -124,6 +99,6 @@
       sidebar.classList.toggle('active');
     });
   </script>
-
 </body>
 </html>
+
