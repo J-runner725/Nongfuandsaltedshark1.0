@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Works - 盐焗鲨 & 农妇</title>
   <style>
-
-    
     body {
       font-family: "Noto Sans SC", sans-serif;
       background: #0b0b0b;
       color: white;
       margin: 0;
       padding: 0;
-      height: 200vh; /* 增加高度方便滚动 */
+      height: 200vh;
+      overflow-x: hidden;
     }
 
     section {
@@ -26,10 +25,83 @@
 
     .page1 { background: url('images/liedown.jpg') no-repeat center center / cover; }
     .page2 { background: url('images/wineandwindow.jpg') no-repeat center center / cover; }
+
+    /* 菜单按钮 */
+    #menuButton {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 18px;
+      z-index: 1001;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    #menuButton:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 侧边栏 */
+    #sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      height: 100%;
+      width: 250px;
+      background-color: rgba(0, 0, 0, 0.8);
+      transition: left 0.3s ease;
+      padding-top: 60px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    #sidebar a {
+      display: block;
+      padding: 15px 30px;
+      color: #f2f2f2;
+      text-decoration: none;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+
+    #sidebar a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
   </style>
 </head>
 <body>
+
+  <button id="menuButton">☰ 菜单</button>
+
+  <div id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="works.html">Works</a>
+    <a href="photos.html">Photos</a>
+    <a href="us.html">Us</a>
+  </div>
+
   <section class="page1">9/16/</section>
   <section class="page2">10/17</section>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const sidebar = document.getElementById('sidebar');
+    let sidebarOpen = false;
+
+    menuButton.addEventListener('click', () => {
+      if (!sidebarOpen) {
+        sidebar.style.left = '0';
+        sidebarOpen = true;
+      } else {
+        sidebar.style.left = '-250px';
+        sidebarOpen = false;
+      }
+    });
+  </script>
+
 </body>
 </html>
