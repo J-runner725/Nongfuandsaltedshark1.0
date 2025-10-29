@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Us - 盐焗鲨 & 农妇</title>
+  <style>
+    body {
+      font-family: "Noto Sans SC", sans-serif;
+      background: #0b0b0b;
+      color: white;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* 左上角菜单按钮 */
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 顶部自动播放 Banner */
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .banner img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .banner img.active {
+      opacity: 1;
+    }
+
+    /* 下方左右照片卡片区 */
+    .section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 100px;
+      padding: 100px 0;
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 80%;
+      max-width: 1200px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .card img {
+      width: 45%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    .card .info {
+      width: 45%;
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.8;
+      color: #ccc;
+    }
+
+    .card a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid #fff;
+      transition: color 0.3s;
+    }
+
+    .card a:hover {
+      color: #BF3838;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 菜单按钮 -->
+  <button class="menu-btn" id="menuBtn">☰</button>
+
+  <!-- 侧边栏 -->
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">home</a>
+    <a href="works.html">works</a>
+    <a href="photos.html">photos</a>
+    <a href="us.html">us</a>
+  </div>
+
+  <!-- 自动播放 Banner -->
+  <div class="banner" id="banner">
+    <img src="images/us1.jpg" class="active" alt="banner1">
+    <img src="images/us2.jpg" alt="banner2">
+    <img src="images/us3.jpg" alt="banner3">
+  </div>
+
+  <!-- 下方左右卡片 -->
+  <div class="section">
+    <div class="card">
+      <img src="images/profile1.jpg" alt="鲨" onclick="location.href='us1.html'">
+      <div class="info">
+        <h2>盐焗鲨</h2>
+        <p>C1<br>C</p>
+        <a href="us1.html">→ 了解更多</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/profile2.jpg" alt="农妇" onclick="location.href='us2.html'">
+      <div class="info">
+        <h2>农妇</h2>
+        <p>A1<br>A</p>
+        <a href="us2.html">→ 了解更多</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 菜单侧边栏
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
+
+    // Banner 自动播放
+    const slides = document.querySelectorAll('.banner img');
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 4000);
+
+    // 滚动时卡片淡入
+    const cards = document.querySelectorAll('.card');
+    window.addEventListener('scroll', () => {
+      const trigger = window.innerHeight * 0.8;
+      cards.forEach(card => {
+        const top = card.getBoundingClientRect().top;
+        if (top < trigger) card.classList.add('visible');
+      });
+    });
+  </script>
+</body>
+</html>
