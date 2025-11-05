@@ -1,44 +1,147 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Work</title>
-  <link rel="stylesheet" href="work.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #dcdcd4; /* 柔和浅灰背景 */
+      font-family: "Arial", sans-serif;
+      overflow-x: hidden;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .main-image {
+      width: 65%;
+      opacity: 0;
+      transform: scale(1.2);
+      transition: all 1.2s ease-out;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .main-image.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 拼贴区 */
+    .collage {
+      position: relative;
+      min-height: 200vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .photo {
+      position: absolute;
+      opacity: 0;
+      transform: translateY(100px) rotate(3deg);
+      transition: all 1.2s ease-out;
+    }
+
+    .photo.visible {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+
+    .photo img {
+      width: 100%;
+      border-radius: 15px;
+      transition: transform 0.4s ease;
+    }
+
+    .photo:hover img {
+      transform: scale(1.05) rotate(-1deg);
+      animation: shake 0.5s ease-in-out infinite alternate;
+    }
+
+    .caption {
+      position: absolute;
+      top: -25px;
+      left: 5px;
+      background: #f0f000;
+      padding: 3px 6px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #111;
+    }
+
+    @keyframes shake {
+      0% { transform: scale(1.05) rotate(-1deg); }
+      100% { transform: scale(1.05) rotate(1deg); }
+    }
+  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="menu-btn">☰</div>
-    <div class="menu">
-      <a href="index.html">home</a>
-      <a href="work.html" class="active">work</a>
-      <a href="photos.html">photos</a>
-      <a href="us.html">us</a>
-    </div>
-  </div>
 
   <!-- 第一张主图 -->
-  <section class="main-image" id="main1">
-    <img src="images/sunandpaper.jpg" alt="sun and paper" />
-    <div class="caption">Project One — Sun and Paper</div>
+  <section id="main1">
+    <img src="images/sunandpaper.jpg" alt="主图1" class="main-image">
   </section>
 
   <!-- 第二张主图 -->
-  <section class="main-image" id="main2">
-    <img src="images/catandkitchen.jpg" alt="cat and kitchen" />
-    <div class="caption">Project Two — Cat and Kitchen</div>
+  <section id="main2">
+    <img src="images/catandkitchen.jpg" alt="主图2" class="main-image">
   </section>
 
-  <!-- 拼贴画面 -->
+  <!-- 拼贴区 -->
   <section class="collage">
-    <div class="photo" style="--x:5%; --y:15%; --s:1.2;"><img src="images/ccd.jpg" alt="ccd"></div>
-    <div class="photo" style="--x:60%; --y:25%; --s:0.9;"><img src="images/☁️☁️.jpg" alt="cloud"></div>
-    <div class="photo" style="--x:35%; --y:50%; --s:1.3;"><img src="images/⟡_⋆.jpg" alt="symbol"></div>
-    <div class="photo" style="--x:10%; --y:70%; --s:0.8;"><img src="images/sunset.jpg" alt="sunset"></div>
-    <div class="photo" style="--x:70%; --y:80%; --s:1.1;"><img src="images/liedown.jpg" alt="liedown"></div>
-    <div class="photo" style="--x:45%; --y:95%; --s:1.0;"><img src="images/bluewindow.jpg" alt="bluewindow"></div>
+    <div class="photo" style="top: 100px; left: 8%; width: 250px;">
+      <span class="caption">BRITAIN, 2025</span>
+      <img src="images/ccd.jpg" alt="拼贴1">
+    </div>
+    <div class="photo" style="top: 400px; left: 60%; width: 200px;">
+      <span class="caption">MIAMI, 2024</span>
+      <img src="images/☁️☁️.jpg" alt="拼贴2">
+    </div>
+    <div class="photo" style="top: 750px; left: 20%; width: 300px;">
+      <span class="caption">SUNSET</span>
+      <img src="images/⟡_⋆.jpg" alt="拼贴3">
+    </div>
+    <div class="photo" style="top: 1050px; left: 70%; width: 280px;">
+      <span class="caption">NIGHT DRIVE</span>
+      <img src="images/sunset.jpg" alt="拼贴4">
+    </div>
+    <div class="photo" style="top: 1350px; left: 10%; width: 220px;">
+      <span class="caption">REST</span>
+      <img src="images/liedown.jpg" alt="拼贴5">
+    </div>
+    <div class="photo" style="top: 1650px; left: 50%; width: 260px;">
+      <span class="caption">WINDOW</span>
+      <img src="images/bluewindow.jpg" alt="拼贴6">
+    </div>
   </section>
 
-  <script src="work.js"></script>
+  <script>
+    const mainImgs = document.querySelectorAll('.main-image');
+    const collagePhotos = document.querySelectorAll('.photo');
+
+    window.addEventListener('scroll', () => {
+      mainImgs.forEach(img => {
+        const rect = img.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) img.classList.add('visible');
+      });
+
+      collagePhotos.forEach(photo => {
+        const rect = photo.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) photo.classList.add('visible');
+      });
+    });
+  </script>
 </body>
 </html>
