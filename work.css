@@ -48,7 +48,7 @@ body {
   color: #f33;
 }
 
-/* --- 第一屏主图 --- */
+/* --- 主图部分 --- */
 .main-image {
   position: relative;
   height: 100vh;
@@ -59,10 +59,9 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1.1);
   width: 80%;
-  height: auto;
-  transition: transform 1s ease-out, opacity 1s;
+  transition: transform 1.2s ease-out, opacity 1.2s;
   opacity: 0;
 }
 
@@ -90,10 +89,10 @@ body {
   opacity: 1;
 }
 
-/* --- 第二屏拼贴 --- */
+/* --- 拼贴部分 --- */
 .collage {
   position: relative;
-  height: 200vh;
+  height: 180vh;
   background: #111;
   overflow: hidden;
 }
@@ -101,20 +100,20 @@ body {
 .photo {
   position: absolute;
   transform: translate(var(--x), var(--y)) scale(var(--s)) translateX(100vw);
-  transition: transform 1s ease-in-out;
+  transition: transform 1.2s ease-in-out;
 }
 
 .photo img {
-  width: 250px;
+  width: 260px;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(255,0,0,0.5);
-  transition: transform 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+  transition: transform 0.4s ease;
 }
 
 .photo img:hover {
   animation: sway 0.5s ease-in-out infinite alternate;
-  box-shadow: 0 0 30px rgba(255,50,50,0.8);
+  box-shadow: 0 0 35px rgba(255, 50, 50, 0.8);
 }
 
 @keyframes sway {
