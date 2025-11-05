@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work</title>
-<link rel="stylesheet" href="work.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work</title>
+  <link rel="stylesheet" href="work.css" />
 </head>
 <body>
-
-<div class="sidebar">
-  <div class="menu-btn">☰</div>
-  <div class="menu">
-    <a href="index.html">home</a>
-    <a href="work.html" class="active">work</a>
-    <a href="photos.html">photos</a>
-    <a href="us.html">us</a>
+  <div class="sidebar">
+    <div class="menu-btn">☰</div>
+    <div class="menu">
+      <a href="index.html">home</a>
+      <a href="work.html" class="active">work</a>
+      <a href="photos.html">photos</a>
+      <a href="us.html">us</a>
+    </div>
   </div>
-</div>
 
-<section class="main-image">
-  <img src="images/sunandpaper.jpg" alt="Main Work">
-  <div class="caption">Project One — Emergence</div>
-</section>
+  <!-- 第一张主图 -->
+  <section class="main-image" id="main1">
+    <img src="images/sunandpaper.jpg" alt="sun and paper" />
+    <div class="caption">Project One — Sun and Paper</div>
+  </section>
 
-<section class="collage">
-  <div class="photo" style="--x:10%; --y:20%; --s:1.1;"><img src="images/catandkitchen.jpg" alt=""></div>
-  <div class="photo" style="--x:60%; --y:25%; --s:0.9;"><img src="images/ccd.jpg" alt=""></div>
-  <div class="photo" style="--x:30%; --y:55%; --s:1.3;"><img src="images/☁️☁️.jpg" alt=""></div>
-  <div class="photo" style="--x:70%; --y:60%; --s:0.8;"><img src="images/⟡_⋆.jpg" alt=""></div>
-  <div class="photo" style="--x:20%; --y:80%; --s:1.1;"><img src="images/liedown.jpg" alt=""></div>
-  <div class="photo" style="--x:50%; --y:90%; --s:1.0;"><img src="images/sunset.jpg" alt=""></div>
-</section>
+  <!-- 第二张主图 -->
+  <section class="main-image" id="main2">
+    <img src="images/catandkitchen.jpg" alt="cat and kitchen" />
+    <div class="caption">Project Two — Cat and Kitchen</div>
+  </section>
 
-<script src="work.js"></script>
+  <!-- 拼贴画面 -->
+  <section class="collage">
+    <div class="photo" style="--x:5%; --y:15%; --s:1.2;"><img src="images/ccd.jpg" alt="ccd"></div>
+    <div class="photo" style="--x:60%; --y:25%; --s:0.9;"><img src="images/☁️☁️.jpg" alt="cloud"></div>
+    <div class="photo" style="--x:35%; --y:50%; --s:1.3;"><img src="images/⟡_⋆.jpg" alt="symbol"></div>
+    <div class="photo" style="--x:10%; --y:70%; --s:0.8;"><img src="images/sunset.jpg" alt="sunset"></div>
+    <div class="photo" style="--x:70%; --y:80%; --s:1.1;"><img src="images/liedown.jpg" alt="liedown"></div>
+    <div class="photo" style="--x:45%; --y:95%; --s:1.0;"><img src="images/bluewindow.jpg" alt="bluewindow"></div>
+  </section>
+
+  <script src="work.js"></script>
 </body>
 </html>
