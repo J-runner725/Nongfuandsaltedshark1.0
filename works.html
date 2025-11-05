@@ -10,10 +10,9 @@
     background: #8B0000;
     color: white;
     font-family: "Noto Sans SC", sans-serif;
-    overflow-x: hidden;
+    overflow: hidden; /* 阶段动画时锁定滚动 */
   }
 
-  /* 左上角菜单按钮 */
   .menu-btn {
     position: fixed;
     top: 20px; left: 20px;
@@ -25,7 +24,6 @@
     z-index: 1001;
   }
 
-  /* 侧边栏 */
   .sidebar {
     position: fixed;
     top: 0; left: -250px;
@@ -47,49 +45,60 @@
   }
   .sidebar a:hover { background: rgba(255,255,255,0.1); }
 
-  /* 主图段落 */
-  section {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  /* 全屏居中图片 */
+  .stage {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column;
+    transition: opacity 0.8s ease;
   }
 
-  .image-section img {
-    width: 70%;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  .stage img {
+    width: 60vw;
+    height: auto;
+    transition: transform 0.8s ease, opacity 0.8s ease;
     box-shadow: 0 10px 40px rgba(0,0,0,0.4);
   }
 
   .caption {
-    position: absolute;
-    bottom: 10%;
-    left: 10%;
+    margin-top: 20px;
     font-size: 1.5em;
-    opacity: 0.8;
-  }
-
-  /* 拼贴部分 */
-  .collage {
-    min-height: 150vh;
-    padding: 80px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-  }
-
-  .collage img {
-    width: 100%;
-    object-fit: cover;
-    transform: translateX(100px);
-    opacity: 0;
     transition: transform 0.8s ease, opacity 0.8s ease;
   }
 
-  .collage img.visible {
+  /* 拼贴阶段 */
+  .collage-stage {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #7A0000;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 40px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .collage-stage img {
+    width: 240px;
+    height: 180px;
+    object-fit: cover;
+    transform: translateX(200%);
+    transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.6s ease;
+  }
+
+  .collage-stage.active {
     opacity: 1;
+    pointer-events: all;
+  }
+
+  .collage-stage img.visible {
     transform: translateX(0);
+    opacity: 1;
   }
 </style>
 </head>
@@ -103,63 +112,85 @@
   <a href="us.html">us</a>
 </div>
 
-<section class="image-section" id="section1">
+<!-- 阶段 1 -->
+<div class="stage" id="stage1">
   <img src="images/wineandwindow.jpg" alt="作品1">
   <div class="caption">9/16 — 初始形态</div>
-</section>
+</div>
 
-<section class="image-section" id="section2">
+<!-- 阶段 2 -->
+<div class="stage" id="stage2" style="opacity:0;">
   <img src="images/sunandpaper.jpg" alt="作品2">
   <div class="caption">10/17 — 继续生长</div>
-</section>
+</div>
 
-<section class="collage" id="collage">
+<!-- 阶段 3：拼贴 -->
+<div class="collage-stage" id="collage">
   <img src="images/liedown.jpg">
   <img src="images/ccd.jpg">
   <img src="images/bluewindow.jpg">
   <img src="images/☁️☁️.jpg">
   <img src="images/⟡_⋆.jpg">
   <img src="images/catandkitchen.jpg">
-</section>
+</div>
 
 <script>
-  // 菜单交互
-  const menuBtn = document.getElementById('menuBtn');
-  const sidebar = document.getElementById('sidebar');
-  menuBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+menuBtn.addEventListener('click',()=>sidebar.classList.toggle('active'));
 
-  // 滚动缩放 & 浮现效果
-  const sections = document.querySelectorAll('.image-section img');
-  const collageImages = document.querySelectorAll('.collage img');
+let stage = 1;
+let scrollProgress = 0;
+const stage1 = document.getElementById('stage1');
+const stage2 = document.getElementById('stage2');
+const collage = document.getElementById('collage');
 
-  window.addEventListener('scroll', () => {
-    const windowHeight = window.innerHeight;
+function showStage(n){
+  if(n===1){
+    stage1.style.opacity=1;
+    stage2.style.opacity=0;
+    collage.classList.remove('active');
+  }else if(n===2){
+    stage1.style.opacity=0;
+    stage2.style.opacity=1;
+    collage.classList.remove('active');
+  }else if(n===3){
+    stage1.style.opacity=0;
+    stage2.style.opacity=0;
+    collage.classList.add('active');
+  }
+}
 
-    // 主图缩放跟随滚动
-    sections.forEach(img => {
-      const rect = img.getBoundingClientRect();
-      const visible = rect.top < windowHeight && rect.bottom > 0;
-      if (visible) {
-        const progress = 1 - Math.abs(rect.top + rect.height / 2 - windowHeight / 2) / (windowHeight / 1.2);
-        img.style.opacity = progress;
-        img.style.transform = `scale(${1.2 - progress * 0.2})`;
-      }
+window.addEventListener('wheel', e=>{
+  e.preventDefault();
+  if(stage<3){
+    scrollProgress += e.deltaY * 0.001;
+    scrollProgress = Math.max(0, Math.min(1.5, scrollProgress));
+    const currentStage = stage===1?stage1:stage2;
+    const img = currentStage.querySelector('img');
+    const caption = currentStage.querySelector('.caption');
+    const scale = 1.2 - scrollProgress*0.2;
+    img.style.transform=`scale(${scale})`;
+    caption.style.transform=`translateY(${scrollProgress*50}px) scale(${scale})`;
+    img.style.opacity=1-scrollProgress*0.3;
+    caption.style.opacity=1-scrollProgress*0.4;
+
+    if(scrollProgress>=1){
+      stage++;
+      scrollProgress=0;
+      showStage(stage);
+    }
+  }else{
+    // 拼贴阶段：逐张滑入
+    const imgs = collage.querySelectorAll('img');
+    imgs.forEach((img,i)=>{
+      setTimeout(()=>img.classList.add('visible'), i*200);
     });
+  }
+},{passive:false});
 
-    // 拼贴滑动跟随滚动
-    collageImages.forEach(img => {
-      const rect = img.getBoundingClientRect();
-      const visible = rect.top < windowHeight && rect.bottom > 0;
-      if (visible) {
-        const progress = (windowHeight - rect.top) / windowHeight;
-        img.classList.add('visible');
-        img.style.transform = `translateX(${100 - progress * 100}px)`;
-        img.style.opacity = progress;
-      } else {
-        img.classList.remove('visible');
-      }
-    });
-  });
+showStage(1);
 </script>
 </body>
 </html>
+
