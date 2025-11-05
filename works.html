@@ -3,194 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Works - 盐焗鲨 & 农妇</title>
-<style>
-  * {margin: 0; padding: 0; box-sizing: border-box;}
-  body {
-    background: #8B0000;
-    color: white;
-    font-family: "Noto Sans SC", sans-serif;
-    overflow: hidden; /* 阶段动画时锁定滚动 */
-  }
-
-  .menu-btn {
-    position: fixed;
-    top: 20px; left: 20px;
-    font-size: 24px;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 0; left: -250px;
-    width: 250px; height: 100%;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(8px);
-    transition: left 0.3s ease;
-    padding-top: 60px;
-    z-index: 1000;
-  }
-  .sidebar.active { left: 0; }
-  .sidebar a {
-    display: block;
-    color: #fff;
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 1.2em;
-    transition: background 0.3s;
-  }
-  .sidebar a:hover { background: rgba(255,255,255,0.1); }
-
-  /* 全屏居中图片 */
-  .stage {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex; justify-content: center; align-items: center;
-    flex-direction: column;
-    transition: opacity 0.8s ease;
-  }
-
-  .stage img {
-    width: 60vw;
-    height: auto;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-  }
-
-  .caption {
-    margin-top: 20px;
-    font-size: 1.5em;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-  }
-
-  /* 拼贴阶段 */
-  .collage-stage {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #7A0000;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    justify-items: center;
-    gap: 40px;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .collage-stage img {
-    width: 240px;
-    height: 180px;
-    object-fit: cover;
-    transform: translateX(200%);
-    transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.6s ease;
-  }
-
-  .collage-stage.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .collage-stage img.visible {
-    transform: translateX(0);
-    opacity: 1;
-  }
-</style>
+<title>Work</title>
+<link rel="stylesheet" href="work.css">
 </head>
 <body>
 
-<button class="menu-btn" id="menuBtn">☰</button>
-<div class="sidebar" id="sidebar">
-  <a href="index.html">home</a>
-  <a href="works.html">works</a>
-  <a href="photos.html">photos</a>
-  <a href="us.html">us</a>
+<div class="sidebar">
+  <div class="menu-btn">☰</div>
+  <div class="menu">
+    <a href="index.html">home</a>
+    <a href="work.html" class="active">work</a>
+    <a href="photos.html">photos</a>
+    <a href="us.html">us</a>
+  </div>
 </div>
 
-<!-- 阶段 1 -->
-<div class="stage" id="stage1">
-  <img src="images/wineandwindow.jpg" alt="作品1">
-  <div class="caption">9/16 — 初始形态</div>
-</div>
+<section class="main-image">
+  <img src="images/main1.jpg" alt="Main Work">
+  <div class="caption">Project One — Emergence</div>
+</section>
 
-<!-- 阶段 2 -->
-<div class="stage" id="stage2" style="opacity:0;">
-  <img src="images/sunandpaper.jpg" alt="作品2">
-  <div class="caption">10/17 — 继续生长</div>
-</div>
+<section class="collage">
+  <div class="photo" style="--x:10%; --y:20%; --s:1.1;"><img src="images/pic1.jpg" alt=""></div>
+  <div class="photo" style="--x:60%; --y:25%; --s:0.9;"><img src="images/pic2.jpg" alt=""></div>
+  <div class="photo" style="--x:30%; --y:55%; --s:1.3;"><img src="images/pic3.jpg" alt=""></div>
+  <div class="photo" style="--x:70%; --y:60%; --s:0.8;"><img src="images/pic4.jpg" alt=""></div>
+  <div class="photo" style="--x:20%; --y:80%; --s:1.1;"><img src="images/pic5.jpg" alt=""></div>
+  <div class="photo" style="--x:50%; --y:90%; --s:1.0;"><img src="images/pic6.jpg" alt=""></div>
+</section>
 
-<!-- 阶段 3：拼贴 -->
-<div class="collage-stage" id="collage">
-  <img src="images/liedown.jpg">
-  <img src="images/ccd.jpg">
-  <img src="images/bluewindow.jpg">
-  <img src="images/☁️☁️.jpg">
-  <img src="images/⟡_⋆.jpg">
-  <img src="images/catandkitchen.jpg">
-</div>
-
-<script>
-const menuBtn = document.getElementById('menuBtn');
-const sidebar = document.getElementById('sidebar');
-menuBtn.addEventListener('click',()=>sidebar.classList.toggle('active'));
-
-let stage = 1;
-let scrollProgress = 0;
-const stage1 = document.getElementById('stage1');
-const stage2 = document.getElementById('stage2');
-const collage = document.getElementById('collage');
-
-function showStage(n){
-  if(n===1){
-    stage1.style.opacity=1;
-    stage2.style.opacity=0;
-    collage.classList.remove('active');
-  }else if(n===2){
-    stage1.style.opacity=0;
-    stage2.style.opacity=1;
-    collage.classList.remove('active');
-  }else if(n===3){
-    stage1.style.opacity=0;
-    stage2.style.opacity=0;
-    collage.classList.add('active');
-  }
-}
-
-window.addEventListener('wheel', e=>{
-  e.preventDefault();
-  if(stage<3){
-    scrollProgress += e.deltaY * 0.001;
-    scrollProgress = Math.max(0, Math.min(1.5, scrollProgress));
-    const currentStage = stage===1?stage1:stage2;
-    const img = currentStage.querySelector('img');
-    const caption = currentStage.querySelector('.caption');
-    const scale = 1.2 - scrollProgress*0.2;
-    img.style.transform=`scale(${scale})`;
-    caption.style.transform=`translateY(${scrollProgress*50}px) scale(${scale})`;
-    img.style.opacity=1-scrollProgress*0.3;
-    caption.style.opacity=1-scrollProgress*0.4;
-
-    if(scrollProgress>=1){
-      stage++;
-      scrollProgress=0;
-      showStage(stage);
-    }
-  }else{
-    // 拼贴阶段：逐张滑入
-    const imgs = collage.querySelectorAll('img');
-    imgs.forEach((img,i)=>{
-      setTimeout(()=>img.classList.add('visible'), i*200);
-    });
-  }
-},{passive:false});
-
-showStage(1);
-</script>
+<script src="work.js"></script>
 </body>
 </html>
-
