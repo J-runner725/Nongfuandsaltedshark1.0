@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #111;
+  color: #fff;
+  font-family: "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- 侧边栏 --- */
+.sidebar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 20;
+}
+
+.menu-btn {
+  font-size: 28px;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.menu-btn:hover {
+  color: #f33;
+}
+
+.menu {
+  display: none;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
+  margin: 6px 0;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.menu a:hover, .menu a.active {
+  color: #f33;
+}
+
+/* --- 第一屏主图 --- */
+.main-image {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-image img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 80%;
+  height: auto;
+  transition: transform 1s ease-out, opacity 1s;
+  opacity: 0;
+}
+
+.main-image.active img {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.main-image.shrink img {
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0.8;
+}
+
+.caption {
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  font-size: 1.8rem;
+  color: #f33;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.main-image.active .caption {
+  opacity: 1;
+}
+
+/* --- 第二屏拼贴 --- */
+.collage {
+  position: relative;
+  height: 200vh;
+  background: #111;
+  overflow: hidden;
+}
+
+.photo {
+  position: absolute;
+  transform: translate(var(--x), var(--y)) scale(var(--s)) translateX(100vw);
+  transition: transform 1s ease-in-out;
+}
+
+.photo img {
+  width: 250px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+.photo img:hover {
+  animation: sway 0.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 30px rgba(255,50,50,0.8);
+}
+
+@keyframes sway {
+  from { transform: rotate(-3deg) scale(1.05); }
+  to { transform: rotate(3deg) scale(1.05); }
+}
+
+.photo.show {
+  transform: translate(var(--x), var(--y)) scale(var(--s)) translateX(0);
+}
