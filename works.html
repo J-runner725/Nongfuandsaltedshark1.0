@@ -5,26 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Works - 盐焗鲨 & 农妇</title>
   <style>
+    /* 页面基础设置 */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "Noto Sans SC", sans-serif;
-      background: #0b0b0b;
+      background: #8B0000; /* 深红色背景 */
       color: white;
-      margin: 0;
-      padding: 0;
-      height: 200vh;
+      font-family: "Noto Sans SC", sans-serif;
       overflow-x: hidden;
     }
-
-    section {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 4vw;
-    }
-
-    .page1 { background: url('images/liedown.jpg') no-repeat center center / cover; }
-    .page2 { background: url('images/wineandwindow.jpg') no-repeat center center / cover; }
 
     /* 左上角菜单按钮 */
     .menu-btn {
@@ -39,14 +27,14 @@
       z-index: 1001;
     }
 
-    /* 侧边栏样式 */
+    /* 侧边栏 */
     .sidebar {
       position: fixed;
       top: 0;
       left: -250px;
       width: 250px;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(8px);
       transition: left 0.3s ease;
       display: flex;
@@ -54,11 +42,7 @@
       padding-top: 60px;
       z-index: 1000;
     }
-
-    .sidebar.active {
-      left: 0;
-    }
-
+    .sidebar.active { left: 0; }
     .sidebar a {
       color: #fff;
       padding: 15px 30px;
@@ -66,11 +50,78 @@
       font-size: 1.2em;
       transition: background 0.3s;
     }
+    .sidebar a:hover { background: rgba(255, 255, 255, 0.1); }
 
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.1);
+    /* 全屏段落基础样式 */
+    section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: transform 1s ease, opacity 1s ease;
     }
 
+    /* 第一、第二张主图 */
+    .image-section img {
+      width: 70%;
+      height: auto;
+      opacity: 0;
+      transform: scale(1.2);
+      transition: opacity 1s ease, transform 1s ease;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+    .image-section.visible img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 10%;
+      left: 10%;
+      font-size: 1.5em;
+      opacity: 0.8;
+    }
+
+    /* 拼贴区 */
+    .collage {
+      min-height: 150vh;
+      position: relative;
+      padding: 80px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .collage img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      opacity: 0;
+      transform: rotate(var(--angle)) translateY(50px);
+      transition: opacity 0.8s ease, transform 1s ease;
+    }
+
+    .collage img.visible {
+      opacity: 1;
+      transform: rotate(var(--angle)) translateY(0);
+    }
+
+    /* 鼠标悬停左右摇摆效果 */
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(var(--angle)) translateY(0); }
+      30% { transform: rotate(calc(var(--angle) + 2deg)) translateY(0); }
+      70% { transform: rotate(calc(var(--angle) - 2deg)) translateY(0); }
+    }
+
+    .collage img:hover {
+      animation: wiggle 0.4s ease-in-out infinite;
+      filter: brightness(1.1);
+    }
   </style>
 </head>
 
@@ -86,19 +137,52 @@
     <a href="us.html">us</a>
   </div>
 
-  <!-- 页面内容 -->
-  <section class="page1">9 / 16</section>
-  <section class="page2">10 / 17</section>
+  <!-- 第一张主图 -->
+  <section class="image-section" id="section1">
+    <img src="images/wineandwindow.jpg" alt="作品1"> <!-- 替换为你的图 -->
+    <div class="caption">9/16 — 初始形态</div>
+  </section>
 
-  <!-- 侧边栏脚本 -->
+  <!-- 第二张主图 -->
+  <section class="image-section" id="section2">
+    <img src="images/sunandpaper.jpg" alt="作品2">
+    <div class="caption">10/17 — 继续生长</div>
+  </section>
+
+  <!-- 拼贴区域 -->
+  <section class="collage" id="collage">
+    <img src="images/liedown.jpg" style="--angle: -5deg;">
+    <img src="images/ccd.jpg" style="--angle: 3deg;">
+    <img src="images/bluewindow.jpg" style="--angle: -8deg;">
+    <img src="images/☁️☁️.jpg" style="--angle: 5deg;">
+    <img src="images/⟡_⋆.jpg" style="--angle: -2deg;">
+    <img src="images/catandkitchen.jpg" style="--angle: 6deg;">
+  </section>
+
   <script>
+    // 侧边栏交互
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
-
     menuBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
     });
+
+    // 图片浮现逻辑
+    const sections = document.querySelectorAll('.image-section, .collage');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.classList.contains('collage')) {
+            entry.target.querySelectorAll('img').forEach(img => {
+              img.classList.add('visible');
+            });
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(sec => observer.observe(sec));
   </script>
 </body>
 </html>
-
